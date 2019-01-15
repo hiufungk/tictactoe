@@ -21,7 +21,9 @@ public class Board {
     }
 
     private void initBoard(){
-        for (int i = 0; i < 3; i++)
+    	playedMoves = 0;
+        
+    	for (int i = 0; i < 3; i++)
             for(int j = 0; j < 3; j++)
                 board[i][j] = Player.NONE;
 
