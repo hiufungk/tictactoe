@@ -34,37 +34,50 @@ public class TicTacToeGame {
 
     public void playGame(){
         Scanner keyboardScanner = new Scanner(System.in);
-
-        while (board.getWinner() == null && board.maxTurns() == false){
-            board.printBoard();
-            promptNextPlayer();
-            String line = keyboardScanner.nextLine();
-            String input[] = line.split(",");
-            try {
-                board.playMove(Integer.parseInt(input[0]), Integer.parseInt(input[1]));
-            } catch (InvalidMoveException e) {
-                System.out.println("Invalid coordinates. Try again");
-                promptNextPlayer();
-            }
-        }
-
-        board.printBoard();
-        if (board.getWinner() != null) {
-        	System.out.println("Player " + board.getWinner() + " has won the game!");	
-        	
-        	if(Player.X == board.getWinner()) {
-        		scoreBoard.setXwin();
-        	} else if (Player.O == board.getWinner()) {
-        		scoreBoard.setOwin();
-        	}
-        }
-        else {
-        	System.out.println("The game has ended in a tie.");
-        	scoreBoard.setTie();
-        }
-        scoreBoard.printScoreBoard();
-    }
-
+        boolean shouldContinue = true;
+        
+        while(shouldContinue) {
+	        while (board.getWinner() == null && board.maxTurns() == false){
+	            board.printBoard();
+	            promptNextPlayer();
+	            String line = keyboardScanner.nextLine();
+	            String input[] = line.split(",");
+	            try {
+	                board.playMove(Integer.parseInt(input[0]), Integer.parseInt(input[1]));
+	            } catch (InvalidMoveException e) {
+	                System.out.println("Invalid coordinates. Try again");
+	                promptNextPlayer();
+	            }
+	        }
+	
+	        board.printBoard();
+	        if (board.getWinner() != null) {
+	        	System.out.println("Player " + board.getWinner() + " has won the game!");	
+	        	
+	        	if(Player.X == board.getWinner()) {
+	        		scoreBoard.setXwin();
+	        	} else if (Player.O == board.getWinner()) {
+	        		scoreBoard.setOwin();
+	        	}
+	        }
+	        else {
+	        	System.out.println("The game has ended in a tie.");
+	        	scoreBoard.setTie();
+	        }
+	        scoreBoard.printScoreBoard();
+	        System.out.println("Do you want to play another game? (type yes or type anything else to exit)");
+	        String userInput = keyboardScanner.nextLine();
+	        
+	        if(userInput.equals("yes")) {
+	        	board.resetGame();
+	        } else {
+	        	shouldContinue = false;
+	        	System.out.println("See you next time!");
+	        	System.exit(0);
+	        }
+	    }
+	}
+    
     public static void main(String args[]){
         TicTacToeGame game = new TicTacToeGame();
         game.playGame();
